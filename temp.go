@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 var types map[string]int
 
@@ -16,5 +19,13 @@ func countTypes() {
 
 	for t, value := range types {
 		fmt.Printf("Log type: %s, Count: %d\n", t, value)
+	}
+}
+
+func testPrint() {
+	for _, log := range logs {
+		for _, l := range log {
+			fmt.Printf("%s: Type: %s\n", l.Time.Format(time.RFC1123), l.Type)
+		}
 	}
 }

@@ -29,9 +29,9 @@ func openLog() {
 				skip = true
 				continue
 			}
-			if strings.HasPrefix(d, "msg=") {
+			if strings.HasPrefix(d, "msg=audit(") {
 				id = getLogID(d)
-				tmpLog.Time = time.Now()
+				tmpLog.Time = time.Unix(getTimestamp(d), 0)
 			} else if strings.HasPrefix(d, "type=") {
 				tmpLog.Type = strings.Trim(d, "type=")
 			} else {
@@ -47,4 +47,5 @@ func openLog() {
 	}
 
 	countTypes()
+	testPrint()
 }
