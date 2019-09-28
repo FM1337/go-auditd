@@ -1,6 +1,10 @@
 package main
 
-type commonLogFields struct {
-	Type string
-	Msg  string
+import "time"
+
+type log struct {
+	Type   string
+	Time   time.Time
+	Keys   []string
+	Values []string
 }

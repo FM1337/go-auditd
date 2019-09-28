@@ -10,7 +10,7 @@ func countTypes() {
 
 	for _, log := range logs {
 		for _, l := range log {
-			types[l.(commonLogFields).Type] = types[l.(commonLogFields).Type] + 1
+			types[l.Type] = types[l.Type] + 1
 		}
 	}
 
