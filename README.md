@@ -8,3 +8,5 @@ at all, closest I got was LOGalyzer but that was not fun to work with at all, so
 ---
 
 This tool is obviously under construction and right now I'm just focusing on getting it some what functional for the purposes of an college assignment related to auditing.
+
+So don't expect anything pretty (or 100% secure) right off the bat, first step is to get something that actually works for my purposes first.
