@@ -17,23 +17,27 @@ func countTypes() {
 		}
 	}
 
-	for t, value := range types {
-		fmt.Printf("Log type: %s, Count: %d\n", t, value)
-	}
+	// for t, value := range types {
+	// 	fmt.Printf("Log type: %s, Count: %d\n", t, value)
+	// }
 }
 
-func testPrint() {
+func testPrint() []string {
+	tmpLogs := []string{}
 	for key, log := range logs {
 		for _, l := range log {
-			fmt.Printf("%s: Type: %s, ID: %s, ", l.Time.Format(time.RFC1123), l.Type, key)
+			tmpString := ""
+			tmpString += fmt.Sprintf("%s: Type: %s, ID: %s, ", l.Time.Format(time.RFC1123), l.Type, key)
 			for i, k := range l.Keys {
 				if k == "proctitle" {
-					fmt.Printf("%s: %s ", k, decryptProctitle(l.Values[i]))
+					tmpString += fmt.Sprintf("%s: %s", k, decryptProctitle(l.Values[i]))
 				} else {
-					fmt.Printf("%s: %s ", k, l.Values[i])
+					tmpString += fmt.Sprintf("%s: %s", k, l.Values[i])
 				}
+				tmpString += "\n"
 			}
-			fmt.Print("\n")
+			tmpLogs = append(tmpLogs, tmpString)
 		}
 	}
+	return tmpLogs
 }

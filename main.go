@@ -8,7 +8,8 @@ import (
 
 func main() {
 	// init the logs map
-	logs = make(map[string][]log)
+	logs = make(map[string][]Log)
+	initUI()
 	openLog()
 }
 
@@ -22,7 +23,7 @@ func openLog() {
 	for _, l := range lines {
 		lineData := strings.Split(l, " ")
 		id := ""
-		tmpLog := log{}
+		tmpLog := Log{}
 		skip := false
 		for _, d := range lineData {
 			if d == "" || d == " " || d == "," {
@@ -45,7 +46,5 @@ func openLog() {
 		}
 
 	}
-
-	countTypes()
-	testPrint()
+	renderElements()
 }

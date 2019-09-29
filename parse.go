@@ -2,13 +2,12 @@ package main
 
 import (
 	"encoding/hex"
-	"fmt"
 	"strconv"
 	"strings"
 )
 
 // logs is our map containing the logs
-var logs map[string][]log
+var logs map[string][]Log
 
 func getLogID(msg string) string {
 	return strings.TrimLeft(strings.TrimRight(msg, "):"), "msg=audit(")
@@ -28,7 +27,7 @@ func decryptProctitle(proctitle string) string {
 	b, err := hex.DecodeString(proctitle)
 	if err != nil {
 		// if we hit this, then this is probably not encoded in hex so just return the original
-		fmt.Println(err.Error())
+		//fmt.Println(err.Error())
 		return proctitle
 	}
 	return string(b)

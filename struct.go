@@ -2,7 +2,8 @@ package main
 
 import "time"
 
-type log struct {
+// Log is our log object.
+type Log struct {
 	Type   string
 	Time   time.Time
 	Keys   []string
