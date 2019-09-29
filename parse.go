@@ -9,6 +9,9 @@ import (
 // logs is our map containing the logs
 var logs map[string][]Log
 
+// keys contain our map keys (in order so that we can actually sort through them)
+var keys []string
+
 func getLogID(msg string) string {
 	return strings.TrimLeft(strings.TrimRight(msg, "):"), "msg=audit(")
 }

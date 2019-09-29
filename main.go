@@ -1,7 +1,9 @@
 package main
 
 import (
-	"io/ioutil"
+	"bufio"
+	"io"
+	"os"
 	"strings"
 	"time"
 )
@@ -11,17 +13,24 @@ func main() {
 	logs = make(map[string][]Log)
 	initUI()
 	openLog()
+	renderElements()
 }
 
 // this is a temporary function until I figure out some stuff
 func openLog() {
-	file, err := ioutil.ReadFile("test/audit.log")
+	file, err := os.Open("test/audit.log")
+	defer file.Close()
 	if err != nil {
 		panic(err)
 	}
-	lines := strings.Split(string(file), "\n")
-	for _, l := range lines {
-		lineData := strings.Split(l, " ")
+	reader := bufio.NewReader(file)
+	for {
+		line, err := reader.ReadString('\n')
+		if err == io.EOF {
+			break
+		}
+		lastKey := ""
+		lineData := strings.Split(line, " ")
 		id := ""
 		tmpLog := Log{}
 		skip := false
@@ -32,6 +41,11 @@ func openLog() {
 			}
 			if strings.HasPrefix(d, "msg=audit(") {
 				id = getLogID(d)
+				if id != lastKey {
+					lastKey = id
+					keys = append(keys, id)
+				}
+				tmpLog.ID = id
 				tmpLog.Time = time.Unix(getTimestamp(d), 0)
 			} else if strings.HasPrefix(d, "type=") {
 				tmpLog.Type = strings.Trim(d, "type=")
@@ -42,9 +56,10 @@ func openLog() {
 			}
 		}
 		if !skip {
+			// append to the map
 			logs[id] = append(logs[id], tmpLog)
 		}
 
 	}
-	renderElements()
+	file.Close()
 }

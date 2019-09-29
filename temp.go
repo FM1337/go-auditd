@@ -24,10 +24,11 @@ func countTypes() {
 
 func testPrint() []string {
 	tmpLogs := []string{}
-	for key, log := range logs {
-		for _, l := range log {
+	for _, key := range keys {
+		mappedLog := logs[key]
+		for _, l := range mappedLog {
 			tmpString := ""
-			tmpString += fmt.Sprintf("%s: Type: %s, ID: %s, ", l.Time.Format(time.RFC1123), l.Type, key)
+			tmpString += fmt.Sprintf("%s: Type: %s, ID: %s, ", l.Time.Format(time.RFC1123), l.Type, l.ID)
 			for i, k := range l.Keys {
 				if k == "proctitle" {
 					tmpString += fmt.Sprintf("%s: %s", k, decryptProctitle(l.Values[i]))
