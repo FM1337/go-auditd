@@ -1,6 +1,8 @@
 package main
 
 import (
+	"encoding/hex"
+	"fmt"
 	"strconv"
 	"strings"
 )
@@ -20,4 +22,14 @@ func getTimestamp(msg string) int64 {
 		panic(err)
 	}
 	return ts
+}
+
+func decryptProctitle(proctitle string) string {
+	b, err := hex.DecodeString(proctitle)
+	if err != nil {
+		// if we hit this, then this is probably not encoded in hex so just return the original
+		fmt.Println(err.Error())
+		return proctitle
+	}
+	return string(b)
 }

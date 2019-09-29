@@ -23,9 +23,17 @@ func countTypes() {
 }
 
 func testPrint() {
-	for _, log := range logs {
+	for key, log := range logs {
 		for _, l := range log {
-			fmt.Printf("%s: Type: %s\n", l.Time.Format(time.RFC1123), l.Type)
+			fmt.Printf("%s: Type: %s, ID: %s, ", l.Time.Format(time.RFC1123), l.Type, key)
+			for i, k := range l.Keys {
+				if k == "proctitle" {
+					fmt.Printf("%s: %s ", k, decryptProctitle(l.Values[i]))
+				} else {
+					fmt.Printf("%s: %s ", k, l.Values[i])
+				}
+			}
+			fmt.Print("\n")
 		}
 	}
 }
